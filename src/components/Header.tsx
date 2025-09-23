@@ -1,48 +1,57 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button-variants";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import nxtStackLogo from "@/assets/nxtstack-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    { name: "Services", href: "#services" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "Services", href: "/services" },
+    { name: "About", href: "/about" },
+    { name: "Portfolio", href: "/portfolio" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
     <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50 animate-fade-in">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center space-x-3">
+        <Link to="/" className="flex items-center space-x-3 group">
           <img 
             src={nxtStackLogo} 
             alt="NxtStack Solutions Logo" 
-            className="h-10 w-10 object-contain"
+            className="h-10 w-10 object-contain group-hover:animate-pulse-slow transition-all"
           />
           <span className="text-xl font-bold hero-text">NxtStack Solutions</span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href={item.href}
-              className="text-foreground hover:text-primary transition-colors font-medium"
+              to={item.href}
+              className={`text-foreground hover:text-primary transition-all font-medium relative group ${
+                location.pathname === item.href ? 'text-primary' : ''
+              }`}
             >
               {item.name}
-            </a>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+            </Link>
           ))}
         </nav>
 
         {/* CTA Button */}
         <div className="hidden md:block">
-          <Button variant="hero" size="lg">
-            Get Started
-          </Button>
+          <Link to="/contact">
+            <Button variant="hero" size="lg" className="animate-shimmer">
+              Get Started
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -60,18 +69,22 @@ const Header = () => {
         <div className="md:hidden bg-background border-b border-border animate-slide-up">
           <div className="px-4 py-4 space-y-4">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
-                className="block text-foreground hover:text-primary transition-colors font-medium"
+                to={item.href}
+                className={`block text-foreground hover:text-primary transition-colors font-medium ${
+                  location.pathname === item.href ? 'text-primary' : ''
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
-            <Button variant="hero" size="lg" className="w-full">
-              Get Started
-            </Button>
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+              <Button variant="hero" size="lg" className="w-full">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </div>
       )}
