@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button-variants";
 import { ArrowRight, Code, Rocket, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -35,17 +34,13 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/contact">
-              <Button variant="hero" size="xl" className="group">
-                Start Your Journey
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-            <Link to="/portfolio">
-              <Button variant="outline" size="xl">
-                View Our Work
-              </Button>
-            </Link>
+            <Button variant="hero" size="xl" className="group">
+              Start Your Journey
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button variant="outline" size="xl">
+              View Our Work
+            </Button>
           </div>
 
           {/* Stats */}
